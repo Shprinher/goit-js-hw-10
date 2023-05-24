@@ -69,32 +69,19 @@ function renderCountryInfo(country) {
   const countryInfo = document.createElement("div");
   countryInfo.classList.add("country-info");
 
-  const flagImg = document.createElement("img");
-  flagImg.src = country.flags.svg;
-  flagImg.alt = `${country.name.official} flag`;
-  flagImg.classList.add("flag");
+  const languages = Array.isArray(country.languages)
+    ? country.languages.join(", ")
+    : typeof country.languages === "object"
+    ? Object.values(country.languages).join(", ")
+    : "N/A";
 
-  const countryName = document.createElement("h2");
-  countryName.textContent = country.name.official;
-
-  const capital = document.createElement("p");
-  capital.textContent = `Capital: ${country.capital}`;
-
-  const population = document.createElement("p");
-  population.textContent = `Population: ${country.population}`;
-
-  const languages = document.createElement("p");
-  if (Array.isArray(country.languages)) {
-    languages.textContent = `Languages: ${country.languages.join(", ")}`;
-  } else {
-    languages.textContent = "Languages: N/A";
-  }
-
-  countryInfo.appendChild(flagImg);
-  countryInfo.appendChild(countryName);
-  countryInfo.appendChild(capital);
-  countryInfo.appendChild(population);
-  countryInfo.appendChild(languages);
+  countryInfo.innerHTML = `
+    <img src="${country.flags.svg}" alt="${country.name.official} flag" class="flag">
+    <h2>${country.name.official}</h2>
+    <p>Capital: ${country.capital}</p>
+    <p>Population: ${country.population}</p>
+    <p>Languages: ${languages}</p>
+  `;
 
   countryList.appendChild(countryInfo);
 }
