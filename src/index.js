@@ -32,9 +32,13 @@ searchBox.addEventListener(
         }
       })
       .catch((error) => {
-        Notiflix.Notify.failure("Error occurred. Please try again later.");
-        console.error(error);
-      });
+        if(error.message==="404"){
+                Notiflix.Notify.failure("Error occurred. Please try again later.");
+                console.error(error);
+        } else {
+            Notiflix.Notify.failure(error.message);
+        }
+              });
   }, 300)
 );
 
